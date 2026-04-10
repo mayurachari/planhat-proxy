@@ -1,5 +1,5 @@
 // Vercel Serverless Function - proxies PUT requests to Planhat API
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "PUT, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (!authHeader) return res.status(401).json({ error: "Missing Authorization header" });
   try {
     const resp = await fetch("https://api.planhat.com/companies", {
-      method: "PUT",
+      method: req.method,
       headers: { "Content-Type": "application/json", "Authorization": authHeader },
       body: JSON.stringify(req.body),
     });
@@ -18,4 +18,4 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(500).json({ error: err.message || "Proxy error" });
   }
-}
+};

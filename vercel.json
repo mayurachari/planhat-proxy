@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/planhat", "destination": "/api/planhat" }
+  ]
+}
